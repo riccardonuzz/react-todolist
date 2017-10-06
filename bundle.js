@@ -29195,7 +29195,7 @@ var Header = function Header() {
             _react2.default.createElement(
                 "a",
                 { className: "navbar-brand", href: "#" },
-                _react2.default.createElement("img", { src: "../../assets/images/icon.png", width: "30", height: "30", className: "d-inline-block align-top", alt: "" }),
+                _react2.default.createElement("img", { src: "assets/images/icon.png", width: "30", height: "30", className: "d-inline-block align-top", alt: "" }),
                 "\xA0La mia lista delle cose da fare"
             )
         )
