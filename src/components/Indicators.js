@@ -14,7 +14,7 @@ export default class Indicators extends Component{
     }
 
     render(){
-        this.percent = (this.props.ncompleted/this.props.ntasks)*100 || 0;
+        this.percent = ((this.props.ncompleted/this.props.ntasks)*100) || 0;
         
         this.progressStyle = {
             width: `${this.percent}%`
@@ -28,7 +28,7 @@ export default class Indicators extends Component{
                             <div className="card-body">
                                 <h4 className="card-title">Task completati</h4>
                                     <div className="progress">
-                                        <div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow={this.percent} aria-valuemin="0" aria-valuemax="100" style={this.progressStyle}>{this.percent}%</div>
+                                        <div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow={this.percent} aria-valuemin="0" aria-valuemax="100" style={this.progressStyle}>{this.percent.toFixed(1)}%</div>
                                     </div>
                             </div>
                         </div>
