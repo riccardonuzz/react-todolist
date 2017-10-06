@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Button,Tooltip, OverlayTrigger } from 'react-bootstrap';
 
 export default class Task extends Component{
 
@@ -29,17 +30,27 @@ export default class Task extends Component{
         }
     }
 
+
     render(){
-        console.log(this.state.completed);        
+        
         return (
+           
             <li className="list-group-item">
+                
                 <div className="row">
 
                     <div className="col-1">
                         <label className="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
-                            <input type="checkbox" className="custom-control-input" onClick={this.markAsCompleted}/>
+
+                            <OverlayTrigger placement="top" overlay={(<Tooltip style={{opacity: "1"}} id="tooltip">Task completato.</Tooltip>)}>
+                                <input type="checkbox" className="custom-control-input" onClick={this.markAsCompleted}/>
+                            </OverlayTrigger>
+                            
                             <span className="custom-control-indicator"></span>
                         </label>
+                        <div className="contaner">
+                        
+                        </div>
                     </div>
 
                     <div className="col-5">
