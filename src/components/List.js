@@ -5,13 +5,8 @@ import Task from './Task';
 export default class List extends Component{
     constructor(props){
         super(props);
-        
-
-        
 
     }
-
-    
 
 
     render(){
@@ -20,6 +15,7 @@ export default class List extends Component{
                 <Task
                     key={index}
                     name={task}
+                    incrementCompleted={this.props.incrementCompleted}
                 />
             );
         });

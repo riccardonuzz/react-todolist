@@ -9,7 +9,8 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tasks: []
+            tasks: [],
+            ncompleted: 0
         }
     }
 
@@ -19,17 +20,28 @@ export default class App extends Component {
         this.setState({tasks: newTasks});
     }
 
+    incrementCompleted(check){
+        let counter = this.state.ncompleted;
+        if(check)
+            counter++;
+        else
+            counter--;
+        this.setState({ncompleted: counter});
+    }
+
+
+
     render() {
         return(
             <div>
                 <Header />
                 <br />
-                <Indicators ntasks={this.state.tasks.length}/>
+                <Indicators ncompleted={this.state.ncompleted} ntasks={this.state.tasks.length}/>
                 <br />
                 <div className="container">
                     <AddTodo createTask={this.createTask.bind(this)} />
                     <br />
-                    <List tasks={this.state.tasks} />
+                    <List tasks={this.state.tasks} incrementCompleted={this.incrementCompleted.bind(this)}/>
                 </div>
             </div>
         );
