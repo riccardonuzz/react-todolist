@@ -29351,6 +29351,7 @@ var Task = function (_Component) {
     }, {
         key: 'deleteTask',
         value: function deleteTask() {
+            if (this.isCompleted()) this.props.incrementCompleted(false);
             this.props.deleteTask(this.props.id);
         }
     }, {

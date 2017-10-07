@@ -39,6 +39,8 @@ export default class Task extends Component{
 
 
     deleteTask(){
+        if(this.isCompleted())
+            this.props.incrementCompleted(false);        
         this.props.deleteTask(this.props.id);
     }
 
