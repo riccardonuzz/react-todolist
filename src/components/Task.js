@@ -70,7 +70,7 @@ export default class Task extends Component{
                     </div>
 
                     <div className="col-6 col-lg-6">
-                        {this.props.name+" "+this.state.completed}
+                        {this.props.name}
                     </div>
                     
                     <div className="col-4 col-lg-5 text-right">

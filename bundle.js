@@ -29386,7 +29386,7 @@ var Task = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'col-6 col-lg-6' },
-                        this.props.name + " " + this.state.completed
+                        this.props.name
                     ),
                     _react2.default.createElement(
                         'div',
