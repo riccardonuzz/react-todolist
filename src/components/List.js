@@ -10,12 +10,14 @@ export default class List extends Component{
 
 
     render(){
-        const listItems = this.props.tasks.map( (task, index) => {
+        const listItems = this.props.tasks.map( (task) => {
             return (
                 <Task
-                    key={index}
-                    name={task}
+                    key={task.id}
+                    name={task.name}
+                    id={task.id}
                     incrementCompleted={this.props.incrementCompleted}
+                    deleteTask={this.props.deleteTask}
                 />
             );
         });

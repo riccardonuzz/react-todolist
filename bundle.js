@@ -29029,18 +29029,33 @@ var App = function (_Component) {
         var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
         _this.state = {
+            idcounter: 0,
             tasks: [],
             ncompleted: 0
         };
+
         return _this;
     }
 
     _createClass(App, [{
         key: 'createTask',
-        value: function createTask(newTask) {
+        value: function createTask(taskName) {
             var newTasks = this.state.tasks.slice();
-            newTasks.push(newTask);
-            this.setState({ tasks: newTasks });
+            newTasks.push({ id: this.state.idcounter, name: taskName });
+            var counter = this.state.idcounter;
+            counter++;
+            this.setState({ idcounter: counter, tasks: newTasks });
+        }
+    }, {
+        key: 'deleteTask',
+        value: function deleteTask(index) {
+            this.setState(function (prevState) {
+                return {
+                    tasks: prevState.tasks.filter(function (element) {
+                        return element.id != index;
+                    })
+                };
+            });
         }
     }, {
         key: 'incrementCompleted',
@@ -29064,7 +29079,8 @@ var App = function (_Component) {
                     { className: 'container' },
                     _react2.default.createElement(_AddTodo2.default, { createTask: this.createTask.bind(this) }),
                     _react2.default.createElement('br', null),
-                    _react2.default.createElement(_List2.default, { tasks: this.state.tasks, incrementCompleted: this.incrementCompleted.bind(this) })
+                    _react2.default.createElement(_List2.default, { deleteTask: this.deleteTask.bind(this), tasks: this.state.tasks, incrementCompleted: this.incrementCompleted.bind(this) }),
+                    _react2.default.createElement('br', null)
                 )
             );
         }
@@ -29247,11 +29263,13 @@ var List = function (_Component) {
         value: function render() {
             var _this2 = this;
 
-            var listItems = this.props.tasks.map(function (task, index) {
+            var listItems = this.props.tasks.map(function (task) {
                 return _react2.default.createElement(_Task2.default, {
-                    key: index,
-                    name: task,
-                    incrementCompleted: _this2.props.incrementCompleted
+                    key: task.id,
+                    name: task.name,
+                    id: task.id,
+                    incrementCompleted: _this2.props.incrementCompleted,
+                    deleteTask: _this2.props.deleteTask
                 });
             });
 
@@ -29307,19 +29325,21 @@ var Task = function (_Component) {
             completed: false
         };
 
-        _this.getStatus = _this.getStatus.bind(_this);
+        _this.isCompleted = _this.isCompleted.bind(_this);
         _this.markAsCompleted = _this.markAsCompleted.bind(_this);
+        _this.deleteTask = _this.deleteTask.bind(_this);
         return _this;
     }
 
     _createClass(Task, [{
-        key: 'getStatus',
-        value: function getStatus() {
+        key: 'isCompleted',
+        value: function isCompleted() {
             return this.state.completed;
         }
     }, {
         key: 'markAsCompleted',
         value: function markAsCompleted() {
+
             if (!this.state.completed) {
                 this.setState({ completed: true });
                 this.props.incrementCompleted(true);
@@ -29327,6 +29347,11 @@ var Task = function (_Component) {
                 this.setState({ completed: false });
                 this.props.incrementCompleted(false);
             }
+        }
+    }, {
+        key: 'deleteTask',
+        value: function deleteTask() {
+            this.props.deleteTask(this.props.id);
         }
     }, {
         key: 'render',
@@ -29340,7 +29365,7 @@ var Task = function (_Component) {
                     { className: 'row' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'col-1' },
+                        { className: 'col-1 col-lg-1' },
                         _react2.default.createElement(
                             'label',
                             { className: 'custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0' },
@@ -29351,7 +29376,7 @@ var Task = function (_Component) {
                                         { style: { opacity: "1" }, id: 'tooltip' },
                                         'Task completato.'
                                     ) },
-                                _react2.default.createElement('input', { type: 'checkbox', className: 'custom-control-input', onClick: this.markAsCompleted })
+                                _react2.default.createElement('input', { type: 'checkbox', checked: this.state.completed, className: 'custom-control-input', onChange: this.markAsCompleted })
                             ),
                             _react2.default.createElement('span', { className: 'custom-control-indicator' })
                         ),
@@ -29359,15 +29384,15 @@ var Task = function (_Component) {
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'col-5' },
-                        this.props.name
+                        { className: 'col-6 col-lg-6' },
+                        this.props.name + " " + this.state.completed
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'col-6 text-right' },
+                        { className: 'col-4 col-lg-5 text-right' },
                         _react2.default.createElement(
                             'button',
-                            { type: 'button', className: 'btn btn-danger btn-sm' },
+                            { type: 'button', className: 'btn btn-danger btn-sm', onClick: this.deleteTask },
                             'Elimina'
                         )
                     )
@@ -41401,12 +41426,6 @@ var Indicators = function (_Component) {
         _classCallCheck(this, Indicators);
 
         return _possibleConstructorReturn(this, (Indicators.__proto__ || Object.getPrototypeOf(Indicators)).call(this, props));
-
-        // this.progressStyle = {
-        //     width: '0%'
-        //  };
-
-        // this.percent = 0;
     }
 
     _createClass(Indicators, [{
@@ -41429,18 +41448,19 @@ var Indicators = function (_Component) {
                         { className: "col-sm-6" },
                         _react2.default.createElement(
                             "div",
-                            { className: "card" },
+                            { className: "card mb-1" },
                             _react2.default.createElement(
                                 "div",
                                 { className: "card-body" },
                                 _react2.default.createElement(
                                     "h4",
                                     { className: "card-title" },
-                                    "Task completati"
+                                    "Task completati: ",
+                                    this.props.ncompleted
                                 ),
                                 _react2.default.createElement(
                                     "div",
-                                    { className: "progress" },
+                                    { className: "progress mb-2" },
                                     _react2.default.createElement(
                                         "div",
                                         { className: "progress-bar progress-bar-striped progress-bar-animated", role: "progressbar", "aria-valuenow": this.percent, "aria-valuemin": "0", "aria-valuemax": "100", style: this.progressStyle },
@@ -41456,7 +41476,7 @@ var Indicators = function (_Component) {
                         { className: "col-sm-6" },
                         _react2.default.createElement(
                             "div",
-                            { className: "card" },
+                            { className: "card mb-1" },
                             _react2.default.createElement(
                                 "div",
                                 { className: "card-body" },

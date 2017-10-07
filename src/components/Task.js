@@ -10,15 +10,22 @@ export default class Task extends Component{
             completed: false
         }
 
-        this.getStatus = this.getStatus.bind(this);
+        this.isCompleted = this.isCompleted.bind(this);
         this.markAsCompleted = this.markAsCompleted.bind(this);
+        this.deleteTask = this.deleteTask.bind(this);
     }
 
-    getStatus(){
+
+
+
+
+    isCompleted(){
         return this.state.completed;
     }
 
+
     markAsCompleted(){
+
         if(!this.state.completed) {
             this.setState({completed: true});
             this.props.incrementCompleted(true);
@@ -31,6 +38,13 @@ export default class Task extends Component{
     }
 
 
+    deleteTask(){
+        this.props.deleteTask(this.props.id);
+    }
+
+    
+
+
     render(){
         
         return (
@@ -39,11 +53,11 @@ export default class Task extends Component{
                 
                 <div className="row">
 
-                    <div className="col-1">
+                    <div className="col-1 col-lg-1">
                         <label className="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
 
                             <OverlayTrigger placement="top" overlay={(<Tooltip style={{opacity: "1"}} id="tooltip">Task completato.</Tooltip>)}>
-                                <input type="checkbox" className="custom-control-input" onClick={this.markAsCompleted}/>
+                                <input type="checkbox" checked={this.state.completed} className="custom-control-input" onChange={this.markAsCompleted} />
                             </OverlayTrigger>
                             
                             <span className="custom-control-indicator"></span>
@@ -53,12 +67,12 @@ export default class Task extends Component{
                         </div>
                     </div>
 
-                    <div className="col-5">
-                        {this.props.name}
+                    <div className="col-6 col-lg-6">
+                        {this.props.name+" "+this.state.completed}
                     </div>
                     
-                    <div className="col-6 text-right">
-                    <button type="button" className="btn btn-danger btn-sm">Elimina</button>
+                    <div className="col-4 col-lg-5 text-right">
+                    <button type="button" className="btn btn-danger btn-sm" onClick={this.deleteTask}>Elimina</button>
                     </div>
                 </div>
             </li>            

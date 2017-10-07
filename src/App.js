@@ -9,15 +9,28 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            idcounter: 0,
             tasks: [],
             ncompleted: 0
         }
+
+        
     }
 
-    createTask(newTask){
+    createTask(taskName){
         let newTasks = this.state.tasks.slice();    
-        newTasks.push(newTask);
-        this.setState({tasks: newTasks});
+        newTasks.push({id: this.state.idcounter, name: taskName});
+        let counter = this.state.idcounter;
+        counter++;
+        this.setState({idcounter: counter, tasks: newTasks});
+    }
+
+    deleteTask(index){
+        this.setState((prevState) => ({
+            tasks: prevState.tasks.filter((element) => {
+                return element.id != index
+            })
+          }));
     }
 
     incrementCompleted(check){
@@ -41,7 +54,8 @@ export default class App extends Component {
                 <div className="container">
                     <AddTodo createTask={this.createTask.bind(this)} />
                     <br />
-                    <List tasks={this.state.tasks} incrementCompleted={this.incrementCompleted.bind(this)}/>
+                    <List deleteTask={this.deleteTask.bind(this)} tasks={this.state.tasks} incrementCompleted={this.incrementCompleted.bind(this)}/>
+                    <br />
                 </div>
             </div>
         );
