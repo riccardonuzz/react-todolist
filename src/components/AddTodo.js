@@ -22,8 +22,10 @@ export default class AddTodo extends Component {
 
 
     addTask(){
-        this.props.createTask(this.state.value);
-        this.setState({value: ''});        
+        if(this.state.value != '') {
+            this.props.createTask(this.state.value);
+            this.setState({value: ''});
+        }        
         
     }
 
