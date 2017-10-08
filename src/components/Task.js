@@ -48,6 +48,12 @@ export default class Task extends Component{
 
 
     render(){
+
+        // const stile = {
+        //     "textDecoration": "line-through"
+        // }
+
+        let done = this.state.completed ? (<del>{this.props.name}</del>) : this.props.name;
         
         return (
            
@@ -70,7 +76,7 @@ export default class Task extends Component{
                     </div>
 
                     <div className="col-6 col-lg-6">
-                        {this.props.name}
+                        {done}
                     </div>
                     
                     <div className="col-4 col-lg-5 text-right">
