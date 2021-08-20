@@ -1,31 +1,42 @@
-import React, {Component} from 'react';
+import React from 'react'
+import PropTypes from 'prop-types'
+import Todo from './Todo'
 
-import Task from './Task';
-
-export default class List extends Component{
-    constructor(props){
-        super(props);
-
-    }
-
-
-    render(){
-        const listItems = this.props.tasks.map( (task) => {
-            return (
-                <Task
-                    key={task.id}
-                    name={task.name}
-                    id={task.id}
-                    incrementCompleted={this.props.incrementCompleted}
-                    deleteTask={this.props.deleteTask}
-                />
-            );
-        });
-        
-        return (
-            <ul className="list-group">
-                {listItems}
-            </ul>
-        );
-    }
+const propTypes = {
+    todos: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number,
+            name: PropTypes.string,
+            completed: PropTypes.bool
+        })
+    ),
+    deleteTodo: PropTypes.func,
+    markTodoAsCompleted: PropTypes.func
 }
+
+const List = ({ todos = [], deleteTodo, markTodoAsCompleted }) => {
+    const listItems = todos.map((todo) => (
+        <Todo
+            key={todo.id}
+            name={todo.name}
+            id={todo.id}
+            deleteTodo={deleteTodo}
+            markTodoAsCompleted={markTodoAsCompleted}
+        />
+    ));
+
+    return (
+        <>
+            { todos.length ?
+                <ul className="list-group">
+                    {listItems}
+                </ul> :
+
+                <p className='text-black-50'>No things todo available, add one by typing on the above field ⬆️</p>
+            }
+        </>
+    );
+}
+
+List.propTypes = propTypes;
+export default List;

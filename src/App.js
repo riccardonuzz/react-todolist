@@ -1,64 +1,48 @@
-import React, {Component} from 'react';
+import React, { useState } from 'react';
 
 import AddTodo from './components/AddTodo';
 import Header from './components/Header';
 import List from './components/List';
 import Indicators from './components/Indicators';
 
-export default class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            idcounter: 0,
-            tasks: [],
-            ncompleted: 0
-        }
+const App = () => {
+    const [todos, setTodos] = useState([])
 
-        
+    const addTodo = (name) => {
+        const id = todos.length ? (todos[todos.length - 1].id + 1) : 1;
+        const newTodos = [...todos, { id, name, completed: false }]
+        setTodos(newTodos);
     }
 
-    createTask(taskName){
-        let newTasks = this.state.tasks.slice();    
-        newTasks.push({id: this.state.idcounter, name: taskName});
-        let counter = this.state.idcounter;
-        counter++;
-        this.setState({idcounter: counter, tasks: newTasks});
+    const deleteTodo = (id) => {
+        setTodos(prevState => prevState.filter((todo) => todo.id !== id))
     }
 
-    deleteTask(index){
-        this.setState((prevState) => ({
-            tasks: prevState.tasks.filter((element) => {
-                return element.id != index
-            })
-          }));
+    const markTodoAsCompleted = (id) => {
+        const newTodos = todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo)
+        setTodos([...newTodos])
     }
 
-    incrementCompleted(check){
-        let counter = this.state.ncompleted;
-        if(check)
-            counter++;
-        else
-            counter--;
-        this.setState({ncompleted: counter});
+    const getCompletedTodos = () => {
+        return todos.reduce((n, todo) => n + (todo.completed), 0)
     }
 
 
-
-    render() {
-        return(
-            <div>
-                <Header />
+    return (
+        <div>
+            <Header />
+            <br />
+            <Indicators nCompleted={getCompletedTodos()} nTodos={todos.length} />
+            <br />
+            <div className="container">
+                <AddTodo addTodo={addTodo} />
                 <br />
-                <Indicators ncompleted={this.state.ncompleted} ntasks={this.state.tasks.length}/>
+                <List deleteTodo={deleteTodo} todos={todos} markTodoAsCompleted={markTodoAsCompleted} />
                 <br />
-                <div className="container">
-                    <AddTodo createTask={this.createTask.bind(this)} />
-                    <br />
-                    <List deleteTask={this.deleteTask.bind(this)} tasks={this.state.tasks} incrementCompleted={this.incrementCompleted.bind(this)}/>
-                    <br />
-                </div>
             </div>
-        );
-    }
+        </div>
+    );
 
 }
+
+export default App

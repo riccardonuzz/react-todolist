@@ -1,43 +1,53 @@
-import React, {Component} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types'
 
-export default class Indicators extends Component{
+const propTypes = {
+    nTodos: PropTypes.number,
+    nCompleted: PropTypes.number
+}
 
-    constructor(props){
-        super(props);
+const Indicators = ({ nTodos = 0, nCompleted = 0 }) => {
+    const percent = ((nCompleted / nTodos) * 100) || 0;
 
-    }
+    const progressStyle = {
+        width: `${percent}%`,
+    };
 
-    render(){
-        this.percent = ((this.props.ncompleted/this.props.ntasks)*100) || 0;
-        
-        this.progressStyle = {
-            width: `${this.percent}%`
-         };
-
-        return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-sm-6">
-                        <div className="card mb-1">
-                            <div className="card-body">
-                                <h4 className="card-title">Task completati: {this.props.ncompleted}</h4>
-                                <div className="progress mb-2">
-                                    <div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow={this.percent} aria-valuemin="0" aria-valuemax="100" style={this.progressStyle}>{this.percent.toFixed(1)}%</div>
+    return (
+        <div className="container">
+            <div className="row">
+                <div className="col-sm-6">
+                    <div className="card mb-1">
+                        <div className="card-body">
+                            <h4 className="card-title">Task completati: {nCompleted}</h4>
+                            <div className="progress mb-2">
+                                <div
+                                    className="progress-bar progress-bar-striped progress-bar-animated"
+                                    role="progressbar"
+                                    aria-valuenow={percent}
+                                    aria-valuemin="0"
+                                    aria-valuemax="100"
+                                    style={progressStyle}
+                                >
+                                    {percent.toFixed(1)}%
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="col-sm-6">
-                        <div className="card mb-1">
-                            <div className="card-body">
-                                <h4 className="card-title">Task totali</h4>
-                                <p className="card-text">{this.props.ntasks}</p>
-                            </div>
+                </div>
+                <div className="col-sm-6">
+                    <div className="card mb-1">
+                        <div className="card-body">
+                            <h4 className="card-title">Task totali</h4>
+                            <p className="card-text">{nTodos}</p>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-        );
-    }
+    );
 }
+
+Indicators.propTypes = propTypes
+export default Indicators
