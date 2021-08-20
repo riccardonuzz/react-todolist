@@ -7,25 +7,60 @@ import Indicators from './components/Indicators';
 import TodoAddedNotification from './components/TodoAddedNotification';
 
 const App = () => {
-    const [todos, setTodos] = useState([])
+    const [todos, setTodos] = useState(() => {
+        const localStorageTodos = JSON.parse(localStorage.getItem('todos'))
+        return localStorageTodos || []
+    })
+
     const [showNotification, setShowNotification] = useState(false)
 
+    const saveTodos = (todos) => {
+        localStorage.setItem('todos', JSON.stringify(todos));
+    }
+
+
+    /**
+     * 
+     * @param {string} name 
+     */
     const addTodo = (name) => {
-        const id = todos.length ? (todos[todos.length - 1].id + 1) : 1;
+        const id = todos.length ? (todos[todos.length - 1].id + 1) : 1
         const newTodos = [...todos, { id, name, completed: false }]
-        setTodos(newTodos);
+        setTodos(newTodos)
+        saveTodos(newTodos)
         setShowNotification(true)
     }
 
+
+    /**
+     * 
+     * @param {number | string} id 
+     */
     const deleteTodo = (id) => {
-        setTodos(prevState => prevState.filter((todo) => todo.id !== id))
+        const newTodos = todos.filter(todo => todo.id !== id)
+        setTodos(newTodos)
+        saveTodos(newTodos)
     }
 
+
+    /**
+     * 
+     * @param {number | string} id 
+     */
     const markTodoAsCompleted = (id) => {
         const newTodos = todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo)
         setTodos([...newTodos])
+        saveTodos(newTodos)
     }
 
+    /**
+     * 
+     * @returns {{
+     *    id: number | string,
+     *    name: string,
+     *    completed: boolean
+     * }}
+     */
     const getCompletedTodos = () => {
         return todos.reduce((n, todo) => n + (todo.completed), 0)
     }

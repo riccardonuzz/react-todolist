@@ -18,8 +18,10 @@ const List = ({ todos = [], deleteTodo, markTodoAsCompleted }) => {
     const listItems = todos.map((todo) => (
         <Todo
             key={todo.id}
-            name={todo.name}
             id={todo.id}
+            name={todo.name}
+            completed={todo.completed}
+
             deleteTodo={deleteTodo}
             markTodoAsCompleted={markTodoAsCompleted}
         />

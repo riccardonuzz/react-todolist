@@ -1,27 +1,28 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 const propTypes = {
-    name: PropTypes.string,
-    deleteTodo: PropTypes.func,
-    markTodoAsCompleted: PropTypes.func,
     id: PropTypes.oneOfType([
         PropTypes.number,
         PropTypes.string
-    ])
+    ]),
+    name: PropTypes.string,
+    completed: PropTypes.bool,
+
+    deleteTodo: PropTypes.func,
+    markTodoAsCompleted: PropTypes.func,
 }
 
 const Todo = ({
     id,
     name,
+    completed,
     deleteTodo,
     markTodoAsCompleted
 }) => {
-    const [completed, setCompleted] = useState(false)
 
     const markCurrentAsCompleted = () => {
         markTodoAsCompleted(id)
-        setCompleted(!completed)
     }
 
 
@@ -47,7 +48,7 @@ const Todo = ({
                     {done}
                 </div>
 
-                <div className="col-4 col-lg-5 d-flex justify-content-end">
+                <div className="col-5 col-lg-5 d-flex justify-content-end">
                     <button type="button" className="btn btn-danger btn-sm" onClick={() => deleteTodo(id)}>Delete</button>
                 </div>
             </div>
