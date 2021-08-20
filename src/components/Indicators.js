@@ -19,7 +19,7 @@ const Indicators = ({ nTodos = 0, nCompleted = 0 }) => {
                 <div className="col-sm-6">
                     <div className="card mb-1">
                         <div className="card-body">
-                            <h4 className="card-title">Task completati: {nCompleted}</h4>
+                            <h4 className="card-title">Completed tasks: {nCompleted}</h4>
                             <div className="progress mb-2">
                                 <div
                                     className="progress-bar progress-bar-striped progress-bar-animated"
@@ -38,7 +38,7 @@ const Indicators = ({ nTodos = 0, nCompleted = 0 }) => {
                 <div className="col-sm-6">
                     <div className="card mb-1">
                         <div className="card-body">
-                            <h4 className="card-title">Task totali</h4>
+                            <h4 className="card-title">Total tasks</h4>
                             <p className="card-text">{nTodos}</p>
                         </div>
                     </div>

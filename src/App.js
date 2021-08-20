@@ -4,14 +4,17 @@ import AddTodo from './components/AddTodo';
 import Header from './components/Header';
 import List from './components/List';
 import Indicators from './components/Indicators';
+import TodoAddedNotification from './components/TodoAddedNotification';
 
 const App = () => {
     const [todos, setTodos] = useState([])
+    const [showNotification, setShowNotification] = useState(false)
 
     const addTodo = (name) => {
         const id = todos.length ? (todos[todos.length - 1].id + 1) : 1;
         const newTodos = [...todos, { id, name, completed: false }]
         setTodos(newTodos);
+        setShowNotification(true)
     }
 
     const deleteTodo = (id) => {
@@ -40,6 +43,7 @@ const App = () => {
                 <List deleteTodo={deleteTodo} todos={todos} markTodoAsCompleted={markTodoAsCompleted} />
                 <br />
             </div>
+            {showNotification && <TodoAddedNotification setShow={setShowNotification} />}
         </div>
     );
 

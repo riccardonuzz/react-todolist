@@ -48,7 +48,7 @@ const Todo = ({
                 </div>
 
                 <div className="col-4 col-lg-5 d-flex justify-content-end">
-                    <button type="button" className="btn btn-danger btn-sm" onClick={() => deleteTodo(id)}>Elimina</button>
+                    <button type="button" className="btn btn-danger btn-sm" onClick={() => deleteTodo(id)}>Delete</button>
                 </div>
             </div>
         </li>

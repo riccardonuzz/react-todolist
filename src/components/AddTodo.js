@@ -30,9 +30,9 @@ const AddTodo = ({
         <div className="row">
             <div className="col-12">
                 <div className="input-group" onKeyPress={handleKeyPress}>
-                    <input type="text" value={value} onChange={inputChangeHandler} className="form-control" placeholder="Aggiungi un'attività..." aria-label="Aggiungi un'attività..." />
+                    <input type="text" value={value} onChange={inputChangeHandler} className="form-control" placeholder="Add a task..." aria-label="Add a task..." />
                     <span className="input-group-btn">
-                        <button className="btn btn-primary" type="button" onClick={addNewTodo} disabled={!value}>Aggiungi</button>
+                        <button className="btn btn-primary" type="button" onClick={addNewTodo} disabled={!value}>Add</button>
                     </span>
                 </div>
             </div>
