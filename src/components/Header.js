@@ -1,5 +1,4 @@
 import React from 'react';
-import TodoListIcon from "../assets/images/icon.png"
 
 const Header = () => (
     
