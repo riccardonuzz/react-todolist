@@ -1,10 +1,15 @@
 import { useEffect } from "react"
+import PropTypes from 'prop-types'
 
 const style = {
     display: 'inherit',
     position: 'fixed',
     top: 30,
     right: 10
+}
+
+const propTypes = {
+    setShow: PropTypes.func
 }
 
 const TodoAddedNotification = ({ setShow }) => {
@@ -23,4 +28,6 @@ const TodoAddedNotification = ({ setShow }) => {
     )
 }
 
+
+TodoAddedNotification.propTypes = propTypes
 export default TodoAddedNotification
